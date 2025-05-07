@@ -1,4 +1,6 @@
-rule P1 {
+import "helper/methods.spec";
+
+rule non_zero_payees {
     uint index;
     address addr = getPayee(index);
     //require !lastReverted;
