@@ -1,0 +1,10 @@
+Reports in /mnt/c/Users/n/Desktop/contracts-verification-benchmark-FRA/contracts/payment_splitter/emv-1-certora-08-May--11-33/Reports
+Start Thu May 08 11:33:50 CEST 2025
+[ForkJoinPool-1-worker-1] WARN ALWAYS - Syntax warning in spec file methods.spec:2:5: No implementation for function PaymentSplitter.getPayee(uint256) exists, env-free check will be skipped
+[ForkJoinPool-1-worker-1] WARN ALWAYS - Syntax warning in spec file methods.spec:3:5: No implementation for function PaymentSplitter.getShares(address) exists, env-free check will be skipped
+[ForkJoinPool-1-worker-1] WARN ALWAYS - Syntax warning in spec file methods.spec:5:5: No implementation for function PaymentSplitter.getBalance() exists, env-free check will be skipped
+[ForkJoinPool-1-worker-1] WARN ALWAYS - Syntax warning in spec file methods.spec:6:5: No implementation for function PaymentSplitter.getTotalReleasable() exists, env-free check will be skipped
+[ForkJoinPool-1-worker-1] ERROR ALWAYS - Error in spec file (methods.spec:2:5): External method declaration for PaymentSplitter.getPayee(uint256) returns (address) does not correspond to any known declaration. Did you mean to add optional?
+[ForkJoinPool-1-worker-1] ERROR ALWAYS - Error in spec file (methods.spec:3:5): External method declaration for PaymentSplitter.getShares(address) returns (uint256) does not correspond to any known declaration. Did you mean to add optional?
+[ForkJoinPool-1-worker-1] ERROR ALWAYS - Error in spec file (methods.spec:5:5): External method declaration for PaymentSplitter.getBalance() returns (uint256) does not correspond to any known declaration. Did you mean to add optional?
+[ForkJoinPool-1-worker-1] ERROR ALWAYS - Error in spec file (methods.spec:6:5): External method declaration for PaymentSplitter.getTotalReleasable() returns (uint256) does not correspond to any known declaration. Did you mean to add optional?

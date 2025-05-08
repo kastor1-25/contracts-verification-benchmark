@@ -1,4 +1,5 @@
-import "helper/erc20.spec";
+import "helper/methods.spec";
+import "helper/getters.spec";
 
 rule positive_shares {
     uint index;

@@ -1,0 +1,33 @@
+{
+    "CLI_package_name": "certora-cli",
+    "CLI_version": "7.26.0",
+    "branch": "payment_splitter",
+    "certora_ci_client": null,
+    "conf": {
+        "files": [
+            "versions/PaymentSplitter_v1.sol:PaymentSplitter"
+        ],
+        "msg": "PaymentSplitter_non-zero-payees_v1",
+        "process": "emv",
+        "verify": "PaymentSplitter:certora/non-zero-payees.spec",
+        "wait_for_results": "all"
+    },
+    "conf_path": null,
+    "cwd_relative": "contracts/payment_splitter",
+    "dirty": true,
+    "group_id": null,
+    "main_spec": "certora/non-zero-payees.spec",
+    "origin": "https://github.com/kastor1-25/contracts-verification-benchmark.git",
+    "python_version": "3.13.2",
+    "raw_args": [
+        "/home/n/miniconda3/envs/CERTORA/bin/certoraRun",
+        "versions/PaymentSplitter_v1.sol:PaymentSplitter",
+        "--verify",
+        "PaymentSplitter:certora/non-zero-payees.spec",
+        "--msg",
+        "\"PaymentSplitter_non-zero-payees_v1\"",
+        "--wait_for_results"
+    ],
+    "revision": "720079f3965c929f3114176067de8468fc2d1e14",
+    "timestamp": "1746696826.959845"
+}

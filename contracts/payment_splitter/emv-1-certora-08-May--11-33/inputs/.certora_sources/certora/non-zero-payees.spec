@@ -1,5 +1,4 @@
 import "helper/methods.spec";
-import "helper/getters.spec";
 
 rule non_zero_payees {
     uint index;
