@@ -17,12 +17,18 @@ contract PaymentSplitter {
         // ghost variables
     uint _total_releasable;
 
+
+    // FOR TESTING
+    event ShareAssigned(address indexed payee, uint256 shares);
     constructor(address[] memory payees_, uint256[] memory shares_) payable {
         require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees_.length > 0, "PaymentSplitter: no payees");
 
         for (uint256 i = 0; i < payees_.length; i++) {
             addPayee(payees_[i], shares_[i]);
+
+            // FOR TESTING
+            emit ShareAssigned(payees_[i], shares_[i]);
         }
     }
 
@@ -48,7 +54,7 @@ contract PaymentSplitter {
         }
 
         (bool success,) = account.call{value: payment}("");
-        require(success);
+        require(success, "PaymentSplitter: transaction reverted");
     }
 
     function pendingPayment(
@@ -67,6 +73,10 @@ contract PaymentSplitter {
         payees.push(account);
         shares[account] = shares_;
         totalShares = totalShares + shares_;
+    }
+
+    function balanceOf(address a) public view returns (uint) {
+        return a.balance;
     }
 
 }
