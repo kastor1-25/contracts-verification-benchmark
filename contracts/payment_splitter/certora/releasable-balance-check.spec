@@ -1,5 +1,4 @@
 import "helper/methods.spec";
-import "helper/getters.spec";
 
 rule releasable_balance_check {
     uint index;

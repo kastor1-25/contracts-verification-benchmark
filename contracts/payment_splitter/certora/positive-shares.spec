@@ -1,5 +1,4 @@
 import "helper/methods.spec";
-import "helper/getters.spec";
 
 rule positive_shares {
     uint index;
