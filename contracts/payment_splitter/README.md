@@ -12,35 +12,16 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
 - **positive-shares**:  for all addresses `addr` in `payees`, `shares[addr] > 0`.
 - **releasable-balance-check**:  for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.
 - **releasable-sum-balance**:  the sum of the releasable funds for every accounts is equal to the balance of the contract.
+- **release-insufficient-revert**:  revert on insufficient (TODO)
 - **zero-shares-fail**:  if `payees[0] == addr` then `shares[addr] == 0` (should fail).
 
 ## Versions
 - **v1**: conformant to specification
 
 ## Ground truth
-|        | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | zero-shares-fail         |
-|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | 1                        | 1                        | 1                        | 1                        | 0                        |
+|        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
+|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+| **v1** | 1                           | 1                           | 1                           | 1                           | 1                           | 0                           |
  
 
 ## Experiments
-### SolCMC
-#### Z3
-|        | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | zero-shares-fail         |
-|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | UNK                      | FN!                      | UNK                      | FN                       | TN                       |
- 
-
-#### ELD
-|        | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | zero-shares-fail         |
-|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | ERR                      | ERR                      | ERR                      | ERR                      | ERR                      |
- 
-
-
-### Certora
-|        | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | zero-shares-fail         |
-|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | ERR                      | FN                       | FN                       | FN                       | TN                       |
- 
-

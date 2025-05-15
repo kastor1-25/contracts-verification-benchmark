@@ -6,6 +6,7 @@
         "zero-shares-fail": " if `payees[0] == addr` then `shares[addr] == 0` (should fail).",
         "positive-shares": " for all addresses `addr` in `payees`, `shares[addr] > 0`.",
         "releasable-balance-check": " for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.",
-        "releasable-sum-balance": " the sum of the releasable funds for every accounts is equal to the balance of the contract."
+        "releasable-sum-balance": " the sum of the releasable funds for every accounts is equal to the balance of the contract.",
+        "release-insufficient-revert": " revert on insufficient (TODO)"
     }
 }
