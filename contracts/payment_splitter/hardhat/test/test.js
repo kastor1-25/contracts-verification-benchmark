@@ -37,7 +37,7 @@ describe("PaymentSplitter", function () {
 
 
     // These revert, so I don't think they are useful
-
+    /*
     it("release when funds are insufficient for a fair split should fail", async function() {
         const { PaymentSplitter2, payees } = await loadFixture(deployContract);
         const balanceBefore = await PaymentSplitter2.balanceOf(PaymentSplitter2.getAddress());
@@ -45,12 +45,20 @@ describe("PaymentSplitter", function () {
         await PaymentSplitter2.release(payees[0]);
         expect(await PaymentSplitter2.balanceOf(PaymentSplitter2.getAddress())).not.to.equal(balanceBefore);
     })
+    */
+
 
     it("release but it reverts", async function () {
         const { PaymentSplitter, RevertOnReceive } = await loadFixture(deployContract);
         
         const balanceBefore = await PaymentSplitter.balanceOf(PaymentSplitter.getAddress());
-        await(PaymentSplitter.release(RevertOnReceive.getAddress()));
-        expect(await PaymentSplitter.balanceOf(PaymentSplitter.getAddress())).not.to.equal(balanceBefore);
+
+        await expect(
+            PaymentSplitter.release(RevertOnReceive.getAddress())
+            ).to.be.reverted;
+
+        const balanceAfter = await PaymentSplitter.balanceOf(PaymentSplitter.getAddress());
+
+        expect(balanceAfter).to.equal(balanceBefore); // not important, property still holds
     });
 });

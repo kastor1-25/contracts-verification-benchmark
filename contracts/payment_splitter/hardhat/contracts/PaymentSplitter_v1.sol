@@ -54,7 +54,7 @@ contract PaymentSplitter {
         }
 
         (bool success,) = account.call{value: payment}("");
-        require(success, "PaymentSplitter: transaction reverted");
+        require(success);
     }
 
     function pendingPayment(
