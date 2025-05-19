@@ -8,6 +8,7 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
  `PaymentSplitter` follows a pull payment model. This means that payments are not automatically forwarded to the accounts but kept in this contract, and the actual transfer is triggered as a separate step by calling the release() function.
 
 ## Properties
+- **funds-get-transfered**: for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.
 - **non-zero-payees**:  for all accounts `a` in `payees`, `a != address(0)`.
 - **positive-shares**:  for all addresses `addr` in `payees`, `shares[addr] > 0`.
 - **releasable-balance-check**:  for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.
@@ -19,9 +20,29 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
 - **v1**: conformant to specification
 
 ## Ground truth
-|        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
-|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | 1                           | 1                           | 1                           | 1                           | 1                           | 0                           |
+|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
+|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+| **v1** | 0                           | 1                           | 1                           | 1                           | 1                           | 1                           | 0                           |
  
 
 ## Experiments
+### SolCMC
+#### Z3
+|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
+|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+| **v1** | TN                          | UNK                         | FN!                         | UNK                         | FN                          | ERR                         | TN                          |
+ 
+
+#### ELD
+|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
+|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+| **v1** | UNK                         | UNK                         | UNK                         | UNK                         | UNK                         | ERR                         | UNK                         |
+ 
+
+
+### Certora
+|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
+|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+| **v1** | ERR                         | FN                          | FN                          | FN                          | FN                          | ERR                         | TN                          |
+ 
+

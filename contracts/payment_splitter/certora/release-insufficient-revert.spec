@@ -9,4 +9,6 @@ rule release_insufficient_revert {
     require getShares(addr) > 0;
 
     uint r = getTotalReleasable();
+
+    
 }
