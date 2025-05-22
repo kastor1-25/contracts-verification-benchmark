@@ -30,7 +30,7 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
 #### Z3
 |        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
 |--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | TN                          | UNK                         | FN!                         | UNK                         | FN                          | ERR                         | TN                          |
+| **v1** | UNK                         | UNK                         | UNK                         | UNK                         | UNK                         | ERR                         | UNK                         |
  
 
 #### ELD
@@ -43,6 +43,6 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
 ### Certora
 |        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-insufficient-revert | zero-shares-fail            |
 |--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | ERR                         | FN                          | FN                          | FN                          | FN                          | ERR                         | TN                          |
+| **v1** | TN                          | FN                          | FN                          | FN                          | FN                          | ERR                         | TN                          |
  
 

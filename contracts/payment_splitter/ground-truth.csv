@@ -1,0 +1,9 @@
+property,version,truth,footnote-md
+non-zero-payees,v1,1,
+zero-shares-fail,v1,0,
+positive-shares,v1,1,
+releasable-balance-check,v1,1,
+releasable-sum-balance,v1,1,
+release-insufficient-revert,v1,1,
+funds-get-transfered,v1,0,
+contract-payable,v1,1,
