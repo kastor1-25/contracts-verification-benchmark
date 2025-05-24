@@ -39,23 +39,3 @@ The contract `ExternalPayable` has two functions `g` and `balanceOf`:
 [^1]: The calling contract might fail to send Ether, for example because the called contract calls selfdestruct() and returns the funds back
 
 ## Experiments
-### SolCMC
-#### Z3
-|        | g-check-balance |
-|--------|-----------------|
-| **v1** | TN!             |
- 
-
-#### ELD
-|        | g-check-balance |
-|--------|-----------------|
-| **v1** | TN!             |
- 
-
-
-### Certora
-|        | g-check-balance |
-|--------|-----------------|
-| **v1** | TN              |
- 
-

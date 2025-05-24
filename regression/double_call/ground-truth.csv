@@ -1,2 +1,0 @@
-property,version,truth,footnote-md
-double-call,v1,1,"Subsequent calls should be atomic and nothing should happen in between"

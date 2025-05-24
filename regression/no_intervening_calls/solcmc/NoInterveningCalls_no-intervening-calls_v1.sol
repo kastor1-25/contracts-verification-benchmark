@@ -1,12 +1,9 @@
 pragma solidity ^0.8.25;
 
-
-contract DoubleCall {
+contract NoInterveningCalls {
 	bool private b = true;
 
-    function f() public{
-        
-    }
+    function f() public{}
 
     function g() public {
         b = false;
@@ -16,7 +13,6 @@ contract DoubleCall {
         require(b);
         f();
         f();
-
         assert(b);
     }
 }

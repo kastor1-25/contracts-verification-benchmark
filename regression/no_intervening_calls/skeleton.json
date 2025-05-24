@@ -1,0 +1,7 @@
+{
+    "name": "No Intervening Calls",
+    "specification": "file:specs.md",
+    "properties": {
+        "no-intervening-calls": "No additional or intervening function calls are allowed between the specified function calls within a CVL rule."
+    }
+}
