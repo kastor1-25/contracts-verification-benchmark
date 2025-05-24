@@ -1,0 +1,7 @@
+{
+    "name": "Double Call",
+    "specification": "file:specs.md",
+    "properties": {
+        "double-call": "Subsequent calls should be atomic and nothing should happen in between"
+    }
+}
