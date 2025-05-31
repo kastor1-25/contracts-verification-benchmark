@@ -11,4 +11,12 @@ contract NoInterveningCalls {
     function getB() public view returns (bool) {
         return b;
     }
+
+    function h() public {
+        require(b);
+        f();
+        g();
+        f();
+        assert(b);
+    }
 }

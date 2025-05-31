@@ -6,33 +6,36 @@ The `NoInterveningCalls` contract manages a boolean state variable `b` with two 
 - `f()`: A no-op function that performs no state changes.
 - `g()`: A function that modifies the state by setting `b` to `false`.
 
+When `f()` is called two times in a row and `g()` is not called, the value of `b` should not change.
+
 ## Properties
-- **no-intervening-calls**: No additional or intervening function calls are allowed between the specified function calls within a CVL rule.
+- **explicit-g-call**: `b` is `true` after `g()` is explicitly called between the two `f()` calls in the CVL rule.
+- **no-explicit-g-call**: `b` is `true` after two consecutive calls to `f()` in the CVL rule, without any intervening calls to `g()`.
 
 ## Ground truth
-|        | no-intervening-calls |
-|--------|----------------------|
-| **v1** | 1                    |
+|        | explicit-g-call    | no-explicit-g-call |
+|--------|--------------------|--------------------|
+| **v1** | 0                  | 1                  |
  
 
 ## Experiments
 ### SolCMC
 #### Z3
-|        | no-intervening-calls |
-|--------|----------------------|
-| **v1** | TP!                  |
+|        | explicit-g-call    | no-explicit-g-call |
+|--------|--------------------|--------------------|
+| **v1** | TN!                | TP!                |
  
 
 #### ELD
-|        | no-intervening-calls |
-|--------|----------------------|
-| **v1** | TP!                  |
+|        | explicit-g-call    | no-explicit-g-call |
+|--------|--------------------|--------------------|
+| **v1** | TN!                | TP!                |
  
 
 
 ### Certora
-|        | no-intervening-calls |
-|--------|----------------------|
-| **v1** | TP!                  |
+|        | explicit-g-call    | no-explicit-g-call |
+|--------|--------------------|--------------------|
+| **v1** | TN                 | TP!                |
  
 
