@@ -9,20 +9,20 @@ contract ExternalAbstract {
 	uint x;
 	D d;
 
-	// Should we keep this??
 	constructor(D _d) {
 		d = _d;
-		x = 0;
 	}
 
 	function f() public {
 		if (x < 10)
 			++x;
 	}
+
 	function g() public {
 		require(x < 10);
 		d.d();
 	}
+	
 	function getX() public view returns (uint) {
 		return x;
 	}

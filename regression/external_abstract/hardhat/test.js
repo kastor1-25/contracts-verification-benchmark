@@ -15,7 +15,7 @@ describe("ExternalAbstract", function () {
         return { ExternalAbstract };
     }
 
-    it("x-abstract-call", async function () {
+    it("If an implementation of `D` which calls `f()` is used in the contract, when `g()` is called the value of `x` will change", async function () {
         const { ExternalAbstract } = await loadFixture(deployContract);
 
         const x_before = await ExternalAbstract.getX();

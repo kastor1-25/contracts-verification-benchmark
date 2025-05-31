@@ -8,14 +8,21 @@ abstract contract D {
 contract ExternalAbstract {
 	uint x;
 	D d;
+
+	constructor(D _d) {
+		d = _d;
+	}
+
 	function f() public {
 		if (x < 10)
 			++x;
 	}
+	
 	function g() public {
 		require(x < 10);
 		d.d();
 	}
+
 	function getX() public view returns (uint) {
 		return x;
 	}
