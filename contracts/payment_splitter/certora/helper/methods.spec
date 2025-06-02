@@ -3,7 +3,7 @@ methods {
     function getShares(address) external returns(uint) envfree;
     function releasable(address) external returns(uint) envfree;
     function getBalance() external returns(uint) envfree;
-    function getTotalReleasable() external returns(uint) envfree;
+    //function getTotalReleasable() external returns(uint) envfree;
     function getReleased(address) external returns (uint) envfree;
     function getTotalShares() external returns (uint) envfree;
     function getTotalReleased() external returns (uint) envfree;

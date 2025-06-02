@@ -13,4 +13,3 @@ rule funds_get_transfered {
 
     assert( !lastReverted );
 }
-

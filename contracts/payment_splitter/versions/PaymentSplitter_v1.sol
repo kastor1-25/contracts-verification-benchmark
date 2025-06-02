@@ -75,7 +75,7 @@ contract PaymentSplitter {
     function getAddressBalance(address addr) public view returns (uint) {
         return addr.balance;
     }
-
+/*
     function getTotalReleasable() public view returns (uint) {
         uint _total_releasable = 0;
         for (uint i = 0; i < payees.length; i++) {
@@ -83,7 +83,7 @@ contract PaymentSplitter {
         }
         return _total_releasable;
     }
-
+*/
     function getPayee(uint index) public view returns (address) {
         require(index < payees.length);
         return payees[index];
