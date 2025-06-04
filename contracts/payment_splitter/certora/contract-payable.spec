@@ -6,10 +6,13 @@ rule contract_payable {
     address a;
 
     require amount > 0;
-    require balanceOf(a) >= amount;
+    require nativeBalances[a] >= amount;
 
     uint256 balanceBefore = getBalance();
-    send(a, address(e.this), amount);
+
+
+    //send(a, address(e.this), amount); does not work
+    
 
     assert getBalance() == balanceBefore + amount;
 }

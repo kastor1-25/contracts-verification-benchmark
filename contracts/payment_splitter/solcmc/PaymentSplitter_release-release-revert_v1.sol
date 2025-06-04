@@ -69,38 +69,29 @@ contract PaymentSplitter {
         totalShares = totalShares + shares_;
     }
 
-    function getBalance() public view returns (uint) {
-        return address(this).balance;
-    }
-    function getAddressBalance(address addr) public view returns (uint) {
-        return addr.balance;
-    }
+    // probably not useful, whene executed outputs UNK, see if its worth keeping in
+    function invariant(uint index) public {
+        address addr = payees[index];
 
-    function getTotalReleasable() public view returns (uint) {
-        uint _total_releasable = 0;
-        for (uint i = 0; i < payees.length; i++) {
-            _total_releasable += releasable(payees[i]);
+        uint256 releasableBefore = releasable(addr);
+        uint256 balanceBefore = address(this).balance;
+
+        release(payable(addr));
+
+        uint256 balanceAfter = address(this).balance;
+
+        require (balanceAfter == balanceBefore - releasableBefore);
+
+        //release(payable(addr));
+
+        // Second release call (should revert)
+        bool reverted = false;
+        try this.release(payable(addr)) {
+            // If this succeeds, that's a problem
+        } catch {
+            reverted = true;
         }
-        return _total_releasable;
-    }
 
-    function getPayee(uint index) public view returns (address) {
-        require(index < payees.length);
-        return payees[index];
-    }
-
-    function getShares(address addr) public view returns (uint) {
-        return shares[addr];
-    }
-
-    function getReleased(address addr) public view returns (uint) {
-        return released[addr];
-    }
-
-    function getTotalShares() public view returns (uint) {
-        return totalShares;
-    }
-    function getTotalReleased() public view returns (uint) {
-        return totalReleased;
+        assert(reverted);
     }
 }
