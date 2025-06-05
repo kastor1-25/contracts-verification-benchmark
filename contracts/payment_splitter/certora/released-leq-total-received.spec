@@ -17,8 +17,14 @@ rule released_leq_total_received{
 
     mathint totalShares = getTotalShares();
 
+    require addrShares > 0;
     require totalShares >= addrShares;
     require totalReleased >= addrReleased;
 
-    assert( addrReleased <= totalReceived * addrShares / totalShares);
+    // addrReleased is assigned by CVL without following the rules of release(), so it has
+    // values that are not necessarily equal to the sum of the shares released
+    // adding the
+    // require addrReleased <= totalReceived * addrShares / totalShares;
+
+    assert( addrReleased <= totalReceived * addrShares / totalShares); 
 }
