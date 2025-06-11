@@ -1,0 +1,7 @@
+{
+    "name": "Constructor Call",
+    "specification": "file:specs.md",
+    "properties": {
+        "": "after calling the function `d` from abstract contract `D`, `x` remains unchanged"
+    }
+}
