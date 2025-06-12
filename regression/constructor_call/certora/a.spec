@@ -1,4 +1,5 @@
-persistent ghost mapping(uint => uint256) ghostValues {
+/*
+ghost mapping(uint => uint256) ghostValues {
     init_state axiom forall uint index. ghostValues[index] == 0;
 }
 
@@ -6,26 +7,35 @@ persistent ghost mathint counter {
     init_state axiom counter == 0;
 }
 
-
-
 hook Sstore currentContract.values[INDEX uint index] uint256 value {
     ghostValues[index] = value;
     counter = counter + 1 ;
-}
+}*/
 
 
 // Alternative approach using built-in sum operator
 rule sum_matches_array_values_builtin {
+    env e;
+    /* require currentContract.values.length == 0;
+    require currentContract.sum == 0; */
 
+    require currentContract.sum == getSumOfValues(e);
+/*
+    require currentContract.values.length == 0;
+    require currentContract.sum == 0;
+    require counter == 0;
+    require forall uint i. ghostValues[i] == 0;
+*/
+
+/*
     mathint _len = currentContract.values.length;
     mathint ghost_len = counter;
 
-    assert _len == ghost_len;
+    assert _len == ghost_len;*/
 
-    mathint contractSum = currentContract.sum;
-    mathint totalFromGhost = sum uint256 i. ghostValues[i];
+    // mathint totalFromGhost = sum uint i. ghostValues[i];
     
-    assert contractSum == totalFromGhost;
+    assert currentContract.sum == getSumOfValues(e);
 }
 
 

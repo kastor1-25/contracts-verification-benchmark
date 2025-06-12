@@ -15,7 +15,7 @@ contract ConstructorCall {
         }
     }
 
-    function doSum(uint256 _value) private {
+    function doSum(uint256 _value) public {
 
         require(_value > 0);
         
@@ -26,7 +26,16 @@ contract ConstructorCall {
     function doNothing() public {
         // This function does nothing
     }
+
+    function getSumOfValues() public view returns (uint256) {
+        uint256 total = 0;
+        for (uint256 i = 0; i < values.length; i++) {
+            total += values[i];
+        }
+        return total;
+    }
 }
+
 
 /* 
 contract V1
