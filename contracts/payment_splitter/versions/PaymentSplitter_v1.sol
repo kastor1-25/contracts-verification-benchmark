@@ -103,4 +103,18 @@ contract PaymentSplitter {
     function getTotalReleased() public view returns (uint) {
         return totalReleased;
     }
+    function getSumOfShares() public view returns (uint) {
+        uint sum = 0;
+        for (uint i = 0; i < payees.length; i++) {
+            sum += shares[payees[i]];
+        }
+        return sum;
+    }
+    function getSumOfReleased() public view returns (uint) {
+        uint sum = 0;
+        for (uint i = 0; i < payees.length; i++) {
+            sum += released[payees[i]];
+        }
+        return sum;
+    }
 }

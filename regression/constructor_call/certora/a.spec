@@ -12,6 +12,9 @@ hook Sstore currentContract.values[INDEX uint index] uint256 value {
     counter = counter + 1 ;
 }*/
 
+ghost uint256[MAX_SIZE] pobas;
+
+
 
 // Alternative approach using built-in sum operator
 rule sum_matches_array_values_builtin {
