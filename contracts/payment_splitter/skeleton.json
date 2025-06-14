@@ -9,7 +9,7 @@
         "releasable-sum-balance": " the sum of the releasable funds for every accounts is equal to the balance of the contract.",
         "release-insufficient-revert": " revert on insufficient (TODO)",
         "funds-get-transfered": "for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.",
-        "contract-payable": "TODO",
+        "contract-payable": "the Payment Splitter contract always accepts incoming transactions",
         "release-release-revert": "two consecutive calls to `release` for the same account `a` should revert on the second call."
 
     }

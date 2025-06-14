@@ -1,6 +1,9 @@
 import "helper/methods.spec";
 import "helper/invariants.spec";
 
+
+//maybe this becomes an invariant if its useful, else delete
+
 rule non_zero_payees {
     uint index;
     address addr = getPayee(index);

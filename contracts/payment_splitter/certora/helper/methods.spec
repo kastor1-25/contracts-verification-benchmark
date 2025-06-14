@@ -5,8 +5,6 @@ methods {
     function getBalance() external returns(uint) envfree;
     function getTotalReleasable() external returns(uint) envfree;
     function getReleased(address) external returns (uint) envfree;
-    function getTotalShares() external returns (uint) envfree;
-    function getTotalReleased() external returns (uint) envfree;
 
     function getSumOfShares() external returns (uint) envfree;
     function getSumOfReleased() external returns (uint) envfree;

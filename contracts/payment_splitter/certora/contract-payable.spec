@@ -11,7 +11,7 @@ rule contract_payable {
     uint256 balanceBefore = getBalance();
 
 
-    //send(a, address(e.this), amount); does not work
+    //send(a, address(e.this), amount); // does not work
     
 
     assert getBalance() == balanceBefore + amount;

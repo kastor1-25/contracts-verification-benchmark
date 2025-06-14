@@ -97,12 +97,7 @@ contract PaymentSplitter {
         return released[addr];
     }
 
-    function getTotalShares() public view returns (uint) {
-        return totalShares;
-    }
-    function getTotalReleased() public view returns (uint) {
-        return totalReleased;
-    }
+
     function getSumOfShares() public view returns (uint) {
         uint sum = 0;
         for (uint i = 0; i < payees.length; i++) {
