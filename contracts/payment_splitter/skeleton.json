@@ -3,14 +3,11 @@
     "specification": "file:spec.md" ,
     "properties": {
         "non-zero-payees": " for all accounts `a` in `payees`, `a != address(0)`.",
-        "zero-shares-fail": " if `payees[0] == addr` then `shares[addr] == 0` (should fail).",
         "positive-shares": " for all addresses `addr` in `payees`, `shares[addr] > 0`.",
         "releasable-balance-check": " for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.",
         "releasable-sum-balance": " the sum of the releasable funds for every accounts is equal to the balance of the contract.",
-        "release-insufficient-revert": " revert on insufficient (TODO)",
         "funds-get-transfered": "for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.",
-        "contract-payable": "the Payment Splitter contract always accepts incoming transactions",
-        "release-release-revert": "two consecutive calls to `release` for the same account `a` should revert on the second call."
-
+        "release-release-revert": "two consecutive calls to `release` for the same account `a` should revert on the second call.",
+        "released-leq-total-received": "the total amount released to all accounts should be less than or equal to the total amount received by the contract."
     }
 }

@@ -9,6 +9,7 @@ rule releasable_balance_check {
     address payee = getPayee(index);
     mathint releasable = releasable(payee);
     mathint balance = getBalance();
+    
     assert releasable(payee) <= getBalance();
 }
 

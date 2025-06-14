@@ -69,8 +69,13 @@ contract PaymentSplitter {
         totalShares = totalShares + shares_;
     }
 
-    // non-zero-payees invariant
-    function invariant(uint index) public view {
+    // TODO
+    function invariant(uint256 index) public view {
+        require(index < payees.length);
+    
+        address account = payees[index];
+        uint256 totalReceived = address(this).balance + totalReleased;
 
+        assert(released[account] <= totalReceived * shares[account] / totalShares);
     }
 }

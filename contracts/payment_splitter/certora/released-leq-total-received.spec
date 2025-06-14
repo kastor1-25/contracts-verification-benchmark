@@ -1,7 +1,7 @@
 import "helper/methods.spec";
 import "helper/invariants.spec";
 
-// 2. for all a, released[a] <= (totalReceived * shares[a] ) // totalShares
+// for all a, released[a] <= (totalReceived * shares[a] ) // totalShares
 
 rule released_leq_total_received{
 
