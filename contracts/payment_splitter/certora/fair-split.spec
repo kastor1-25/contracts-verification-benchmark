@@ -3,7 +3,7 @@ import "helper/invariants.spec";
 
 // for all a, released[a] <= (totalReceived * shares[a] ) // totalShares
 
-rule released_leq_total_received{
+rule fair_split{
 
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
@@ -21,5 +21,5 @@ rule released_leq_total_received{
 
     mathint totalReceived = getBalance() + currentContract.totalReleased;
 
-    assert( addrReleased <= totalReceived * addrShares / currentContract.totalShares); 
+    assert addrReleased + releasable(addr) == totalReceived * currentContract.shares[addr] / currentContract.totalShares;
 }

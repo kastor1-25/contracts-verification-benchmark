@@ -76,6 +76,6 @@ contract PaymentSplitter {
         address account = payees[index];
         uint256 totalReceived = address(this).balance + totalReleased;
 
-        assert(released[account] <= totalReceived * shares[account] / totalShares);
+        assert(released[account] + releasable(account) == totalReceived * shares[account] / totalShares);
     }
 }

@@ -7,42 +7,46 @@ The split can be in equal parts or in any other arbitrary proportion. The way th
 
  `PaymentSplitter` follows a pull payment model. This means that payments are not automatically forwarded to the accounts but kept in this contract, and the actual transfer is triggered as a separate step by calling the release() function.
 
+This implementation of the PaymentSplitter contract includes additional getter functions to support formal verification with tools like Certora. 
+
+These functions expose key pieces of information and perform aggregation calculations, enabling rigorous analysis of contract properties and invariants. The added modifications preserve the original functionality and security of the contract while providing enhanced visibility for verification purposes.
+
 ## Properties
-- **funds-get-transfered**: for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.
+- **fair-split**:  for every account `a` in `payees`, `released[a] + releasable(a) == (totalXReceived * shares[a]) / totalShares`.
+- **funds-get-transfered**:  for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.
 - **non-zero-payees**:  for all accounts `a` in `payees`, `a != address(0)`.
 - **positive-shares**:  for all addresses `addr` in `payees`, `shares[addr] > 0`.
 - **releasable-balance-check**:  for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.
 - **releasable-sum-balance**:  the sum of the releasable funds for every accounts is equal to the balance of the contract.
-- **release-release-revert**: two consecutive calls to `release` for the same account `a` should revert on the second call.
-- **released-leq-total-received**: the total amount released to all accounts should be less than or equal to the total amount received by the contract.
+- **release-release-revert**:  two consecutive calls to `release` for the same account `a`, without there being any transfer to the contract in between calls, should revert on the second call.
 
 ## Versions
 - **v1**: conformant to specification
 
 ## Ground truth
-|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-release-revert      | released-leq-total-received |
-|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | 0                           | 1                           | 1                           | 1                           | 1                           | 1                           | 1                           |
+|        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   |
+|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| **v1** | 1                        | 0                        | 1                        | 1                        | 1                        | 1                        | 1                        |
  
 
 ## Experiments
 ### SolCMC
 #### Z3
-|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-release-revert      | released-leq-total-received |
-|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | TN                          | UNK                         | FN!                         | UNK                         | FN                          | UNK                         | FN!                         |
+|        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   |
+|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| **v1** | FN                       | ERR                      | UNK                      | UNK                      | UNK                      | FN                       | UNK                      |
  
 
 #### ELD
-|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-release-revert      | released-leq-total-received |
-|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | UNK                         | UNK                         | UNK                         | UNK                         | UNK                         | UNK                         | UNK                         |
+|        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   |
+|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| **v1** | UNK                      | ERR                      | UNK                      | UNK                      | UNK                      | UNK                      | UNK                      |
  
 
 
 ### Certora
-|        | funds-get-transfered        | non-zero-payees             | positive-shares             | releasable-balance-check    | releasable-sum-balance      | release-release-revert      | released-leq-total-received |
-|--------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
-| **v1** | TN                          | FN                          | TP!                         | TP!                         | TP!                         | TP!                         | TP!                         |
+|        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   |
+|--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| **v1** | TP!                      | TN                       | FN                       | TP!                      | TP!                      | TP!                      | TP!                      |
  
 
