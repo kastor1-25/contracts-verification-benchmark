@@ -8,6 +8,7 @@
         "positive-shares": " for all addresses `addr` in `payees`, `shares[addr] > 0`.",
         "releasable-balance-check": " for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.",
         "releasable-sum-balance": " the sum of the releasable funds for every accounts is equal to the balance of the contract.",
-        "release-release-revert": " two consecutive calls to `release` for the same account `a`, without there being any transfer to the contract in between calls, should revert on the second call."
+        "release-release-revert": " two consecutive calls to `release` for the same account `a`, without there being any transfer to the contract in between calls, should revert on the second call.", 
+        "swappable-call-order": " making two different calls in any order to 'release' should yield the same state as a result."
     }
 }

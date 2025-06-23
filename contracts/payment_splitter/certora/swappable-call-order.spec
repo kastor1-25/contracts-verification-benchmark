@@ -1,56 +1,38 @@
 import "helper/methods.spec";
 import "helper/invariants.spec";
 
-function callFunctionWithParams(env e, method f, address from, address to) {
-    uint256 amount;
-
-    if (f.selector == sig:transfer(address, uint256).selector) {
-        require e.msg.sender == from;
-        transfer(e, to, amount);
-    } else if (f.selector == sig:allowance(address, address).selector) {
-        allowance(e, from, to);
-    } else if (f.selector == sig:approve(address, uint256).selector) {
-        approve(e, to, amount);
-    } else if (f.selector == sig:transferFrom(address, address, uint256).selector) {
-        transferFrom(e, from, to, amount);
-    } else if (f.selector == sig:increaseAllowance(address, uint256).selector) {
-        increaseAllowance(e, to, amount);
-    } else if (f.selector == sig:decreaseAllowance(address, uint256).selector) {
-        decreaseAllowance(e, to, amount);
-    } else if (f.selector == sig:mint(address, uint256).selector) {
-        mint(e, to, amount);
-    } else if (f.selector == sig:burn(address, uint256).selector) {
-        burn(e, from, amount);
-    } else {
-        calldataarg args;
-        f(e, args);
-    }
-}
-
-
 
 rule swappable_call_order {
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
 
-    env e;
-    method f;
-    method g;
-    uint index;
+    env e1;
+    env e2;
+
+    require e1 == e2;
+
+    uint index1;
+    uint index2;
+
+    require index1 != index2; //without this, certora imagines stuff
     
     require index1 < currentContract.payees.length;
+    require index2 < currentContract.payees.length;
 
-    address addr = currentContract.payees[index];
-    uint addrReleased = getReleased(addr);
+    address addr1 = currentContract.payees[index1];
+    address addr2 = currentContract.payees[index2];
+
+    uint addr1Released = getReleased(addr1);
+    uint addr2Released = getReleased(addr2);
 
     storage initial = lastStorage;
 
-    callFunctionWithParams(e, f, addr);
-    callFunctionWithParams(e, g, addr);
+    release(e1, addr1);
+    release(e1, addr2);
     storage final1 = lastStorage;
 
-    callFunctionWithParams(e, g, addr) at initial;
-    callFunctionWithParams(e, f, addr);
+    release(e2, addr2) at initial;
+    release(e2, addr1);
     storage final2 = lastStorage;
 
     assert final1 == final2;

@@ -69,31 +69,14 @@ contract PaymentSplitter {
         totalShares = totalShares + shares_;
     }
 
-    // probably not useful, whene executed outputs UNK, see if its worth keeping in
-    function invariant(uint index) public {
-        address addr = payees[index];
-        
-        require (index < payees.length);
+    
+    function invariant(uint index1, uint index2) public {
+        require (index1 < payees.length);
+        require (index2 < payees.length);
 
-        uint256 releasableBefore = releasable(addr);
-        uint256 balanceBefore = address(this).balance;
+        address payee1 = payees[index1];
+        address payee2 = payees[index2];
 
-        release(payable(addr));
-
-        uint256 balanceAfter = address(this).balance;
-
-        require (balanceAfter == balanceBefore - releasableBefore);
-
-        //release(payable(addr));
-
-        // Second release call (should revert)
-        bool reverted = false;
-        try this.release(payable(addr)) {
-            // If this succeeds, that's a problem
-        } catch {
-            reverted = true;
-        }
-
-        assert(reverted);
-    }
+        //TODO continue trying
+    }   
 }
