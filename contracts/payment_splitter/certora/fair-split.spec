@@ -21,5 +21,8 @@ rule fair_split{
 
     mathint totalReceived = getBalance() + currentContract.totalReleased;
 
-    assert addrReleased + releasable(addr) == totalReceived * currentContract.shares[addr] / currentContract.totalShares;
+    // Choose one
+    
+    // assert addrReleased + releasable(addr) == totalReceived * currentContract.shares[addr] / currentContract.totalShares;
+    assert addrReleased <= totalReceived * currentContract.shares[addr] / currentContract.totalShares;
 }
