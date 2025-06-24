@@ -6,10 +6,7 @@ rule swappable_call_order {
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
 
-    env e1;
-    env e2;
-
-    require e1 == e2;
+    env e;
 
     uint index1;
     uint index2;
@@ -22,18 +19,15 @@ rule swappable_call_order {
     address addr1 = currentContract.payees[index1];
     address addr2 = currentContract.payees[index2];
 
-    uint addr1Released = getReleased(addr1);
-    uint addr2Released = getReleased(addr2);
+    storage initial = lastStorage; // 8 wei; 2 share
 
-    storage initial = lastStorage;
+    release(e, addr1); // -> PaymentSplitter.call{value: v1} 4 wei -> 7
+    release(e, addr2); // -> PaymentSplitter.call{value: v2} 4+3 -> 5
+    storage final1 = lastStorage;// 4+5
 
-    release(e1, addr1);
-    release(e1, addr2);
-    storage final1 = lastStorage;
-
-    release(e2, addr2) at initial;
-    release(e2, addr1);
-    storage final2 = lastStorage;
+    release(e, addr2) at initial; // -> PaymentSplitter.call{value: v2} 4 wei -> 5
+    release(e, addr1);           // -> PaymentSplitter.call{value: v1}  4+2 -> 7
+    storage final2 = lastStorage; //3+7
 
     assert final1 == final2;
 }

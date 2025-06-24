@@ -31,7 +31,30 @@ describe("PaymentSplitter", function () {
         {
             value: ethers.parseUnits("2", "wei")
         }));
-        return { PaymentSplitter, RevertOnReceive , PaymentSplitter2, payees};
+
+
+
+/** */
+
+        const Returns7 = await(ethers.deployContract("ReturnsN", [7], {
+            value: ethers.parseUnits("7", "wei")
+        }));
+        const Returns5 = await(ethers.deployContract("ReturnsN", [5], {
+            value: ethers.parseUnits("5", "wei")
+        }));
+
+        const payees_swap_test = [
+            Returns7.getAddress(),
+            Returns5.getAddress()
+        ];
+        const PaymentSplitter_swap_test = await(ethers.deployContract("PaymentSplitter", [
+            payees_swap_test,
+            [1,1]
+        ], {
+            value: ethers.parseUnits("8", "wei")
+        }));
+
+        return { PaymentSplitter, RevertOnReceive , PaymentSplitter2, payees,   PaymentSplitter_swap_test, payees_swap_test };
     };
 
 
@@ -60,5 +83,40 @@ describe("PaymentSplitter", function () {
         const balanceAfter = await PaymentSplitter.balanceOf(PaymentSplitter.getAddress());
 
         expect(balanceAfter).to.equal(balanceBefore); // not important, property still holds
+    });
+
+
+    it("swap", async function () {
+        var balanceAfter1, balanceAfter2;
+
+        // Run 1: first payee[0] calls release, then payee[1]
+
+        {
+            const { PaymentSplitter, RevertOnReceive , PaymentSplitter2, payees,   PaymentSplitter_swap_test, payees_swap_test } = await loadFixture(deployContract);
+
+            expect (payees_swap_test[0]).not.to.equal(payees_swap_test[1]);
+            
+            await PaymentSplitter_swap_test.release(payees_swap_test[0]);
+            await PaymentSplitter_swap_test.release(payees_swap_test[1]);
+
+            balanceAfter1 = await PaymentSplitter_swap_test.balanceOf(PaymentSplitter_swap_test.getAddress());
+        }
+
+        // Run 2: first payee[1] calls release, then payee[0]
+
+        {
+            const { PaymentSplitter, RevertOnReceive , PaymentSplitter2, payees,   PaymentSplitter_swap_test, payees_swap_test } = await loadFixture(deployContract);
+            
+            expect (payees_swap_test[0]).not.to.equal(payees_swap_test[1]);
+
+            await PaymentSplitter_swap_test.release(payees_swap_test[1]);
+            await PaymentSplitter_swap_test.release(payees_swap_test[0]);
+
+            balanceAfter2 = await PaymentSplitter_swap_test.balanceOf(PaymentSplitter_swap_test.getAddress());
+        }
+
+
+        // Confront the two runs
+        expect(balanceAfter1).not.to.equal(balanceAfter2);
     });
 });
