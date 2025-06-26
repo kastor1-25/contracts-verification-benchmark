@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
 
 contract PaymentSplitter {
 
+    uint256 private constant PAYEES = 3;
 
     bool private initialized = false;
     address private owner;
@@ -59,7 +60,7 @@ contract PaymentSplitter {
 
     function stopInitialization() external {
 
-        require(numPayees == 2, "PaymentSplitter: not enough payees to stop initialization");
+        require(numPayees == PAYEES, "PaymentSplitter: not enough payees to stop initialization");
 
         require(msg.sender == owner, "PaymentSplitter: only owner can stop initialization");
         require(!initialized, "PaymentSplitter: initialization phase is over");
@@ -69,7 +70,7 @@ contract PaymentSplitter {
 
     function addPayee(address account, uint256 shares_) private {
 
-        require(numPayees < 2);
+        require(numPayees < PAYEES);
         require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
         require(!initialized, "PaymentSplitter: initialization phase is over");
         
