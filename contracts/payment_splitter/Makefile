@@ -2,7 +2,7 @@ MAKEFLAGS = --no-print-directory
 
 # CHANGE THIS PATHS
 # Original contract path
-CONTRACT = ./versions/PaymentSplitter_v1.sol 
+CONTRACT = ./versions/
 # Contract with solcmc instrumentation path
 SOLCMC_CONTRACT = ./solcmc
 # Certora specifications path

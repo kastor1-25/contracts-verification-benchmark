@@ -23,11 +23,13 @@ These functions expose key pieces of information and perform aggregation calcula
 
 ## Versions
 - **v1**: conformant to specification
+- **v2**: conformant to specification
 
 ## Ground truth
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | 1                        | 0                        | 1                        | 1                        | 1                        | 1                        | 1                        | 0                        |
+| **v2** | 1                        | 0                        | 1                        | 1                        | 1                        | 1                        | 1                        | 0                        |
  
 
 ## Experiments
@@ -36,12 +38,14 @@ These functions expose key pieces of information and perform aggregation calcula
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | UNK                      | ERR                      | UNK                      | UNK                      | UNK                      | UNK                      | UNK                      | ERR                      |
+| **v2** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
  
 
 #### ELD
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | UNK                      | ERR                      | UNK                      | UNK                      | UNK                      | UNK                      | UNK                      | ERR                      |
+| **v2** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
  
 
 
@@ -49,5 +53,6 @@ These functions expose key pieces of information and perform aggregation calcula
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | TP!                      | TN                       | FN                       | TP!                      | TP!                      | TP!                      | TP!                      | FP!                      |
+| **v2** | FN                       | TN                       | FN                       | FN                       | FN                       | FN                       | TP!                      | TN                       |
  
 
