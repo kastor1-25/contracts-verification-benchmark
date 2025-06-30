@@ -14,21 +14,12 @@ contract PaymentSplitter {
     mapping(address => uint256) private released;
     address[] private payees;
     
-        // ghost variables
-    uint _total_releasable;
-
-
-    // FOR TESTING
-    event ShareAssigned(address indexed payee, uint256 shares);
     constructor(address[] memory payees_, uint256[] memory shares_) payable {
         require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees_.length > 0, "PaymentSplitter: no payees");
 
         for (uint256 i = 0; i < payees_.length; i++) {
             addPayee(payees_[i], shares_[i]);
-
-            // FOR TESTING
-            emit ShareAssigned(payees_[i], shares_[i]);
         }
     }
 

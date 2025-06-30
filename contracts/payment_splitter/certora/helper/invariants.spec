@@ -7,5 +7,9 @@ che il Prover abbia difficoltà a verificare require presenti nel costruttore
 invariant shares_sum_eq_totalShares()
     getSumOfShares() == currentContract.totalShares && currentContract.totalShares > 0;
 
+invariant payee_shares_gt_zero ()
+    forall uint index. index < currentContract.payees.length =>
+    currentContract.shares[currentContract.payees[index]] > 0;
+
 invariant released_sum_totalReleased()
     getSumOfReleased() == currentContract.totalReleased;

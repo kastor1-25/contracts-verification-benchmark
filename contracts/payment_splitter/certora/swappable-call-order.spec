@@ -27,7 +27,7 @@ rule swappable_call_order {
 
     release(e, addr2) at initial; // -> PaymentSplitter.call{value: v2} 4 wei -> 5
     release(e, addr1);           // -> PaymentSplitter.call{value: v1}  4+2 -> 7
-    storage final2 = lastStorage; //3+7
+    storage final2 = lastStorage; //3+7 
 
     assert final1 == final2;
 }
