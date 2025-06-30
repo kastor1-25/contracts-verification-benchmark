@@ -7,6 +7,8 @@ rule fair_split{
 
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
+    requireInvariant payee_shares_gt_zero();
+
 
     env e;
     uint index;

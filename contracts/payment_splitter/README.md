@@ -54,6 +54,6 @@ These functions expose key pieces of information and perform aggregation calcula
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | TP!                      | TN                       | FN                       | TP!                      | TP!                      | TP!                      | TP!                      | FP!                      | TN                       |
-| **v2** | FN                       | TN                       | FN                       | FN                       | FN                       | FN                       | TP!                      | TN                       | ERR                      |
+| **v2** | FN                       | TN                       | FN                       | TP!                      | FN                       | FN                       | TP!                      | TN                       | TN                       |
  
 
