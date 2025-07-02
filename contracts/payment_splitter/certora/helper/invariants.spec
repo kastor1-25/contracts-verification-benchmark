@@ -13,3 +13,4 @@ invariant payee_shares_gt_zero ()
 
 invariant released_sum_totalReleased()
     getSumOfReleased() == currentContract.totalReleased;
+

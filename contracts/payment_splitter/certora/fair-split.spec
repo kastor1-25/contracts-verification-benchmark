@@ -9,12 +9,10 @@ rule fair_split{
     requireInvariant released_sum_totalReleased();
     requireInvariant payee_shares_gt_zero();
 
-
     env e;
     uint index;
 
-    //address addr = getPayee(index); //same thing as the following two lines, but with a getter
-
+    require currentContract.payees.length < 4;
     require index < currentContract.payees.length;
     address addr = currentContract.payees[index];
 
@@ -23,8 +21,8 @@ rule fair_split{
 
     mathint totalReceived = getBalance() + currentContract.totalReleased;
 
-    // Choose one
-    
-    // assert addrReleased + releasable(addr) == totalReceived * currentContract.shares[addr] / currentContract.totalShares;
+    require totalReceived < 2^255; // to avoid overflow in the division
+
+    uint bal = getBalance();
     assert addrReleased <= totalReceived * currentContract.shares[addr] / currentContract.totalShares;
 }
