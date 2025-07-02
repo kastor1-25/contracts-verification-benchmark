@@ -81,6 +81,7 @@ contract PaymentSplitter {
         payees.push(account);
         shares[account] = shares_;
         totalShares = totalShares + shares_;
+        numPayees+=1;
     }
 
     // Getters
