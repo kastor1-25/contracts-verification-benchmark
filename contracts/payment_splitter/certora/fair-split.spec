@@ -3,17 +3,21 @@ import "helper/invariants.spec";
 
 // for all a, released[a] <= (totalReceived * shares[a] ) // totalShares
 
-rule fair_split{
+/* rule fair_split{
 
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
     requireInvariant payee_shares_gt_zero();
-
+    
     env e;
     uint index;
 
-    require currentContract.payees.length < 4;
-    require index < currentContract.payees.length;
+    require forall address addr .
+        currentContract.released[addr] == 0;
+    
+
+/*     require currentContract.payees.length < 4;
+ *//*    require index < currentContract.payees.length;
     address addr = currentContract.payees[index];
 
     uint addrReleased = getReleased(addr);
@@ -25,4 +29,35 @@ rule fair_split{
 
     uint bal = getBalance();
     assert addrReleased <= totalReceived * currentContract.shares[addr] / currentContract.totalShares;
-}
+} */
+
+
+
+invariant fair_split (uint index1)
+    index1 < currentContract.payees.length =>
+
+    getReleased(currentContract.payees[index1]) <= (
+        (getBalance() + currentContract.totalReleased) * 
+        currentContract.shares[currentContract.payees[index1]] /
+        currentContract.totalShares
+    )
+    {
+        preserved {
+            requireInvariant shares_sum_eq_totalShares();
+            requireInvariant released_sum_totalReleased();
+            requireInvariant payee_shares_gt_zero();
+        }
+
+        preserved addPayee(address a, uint shares_) with (env e){
+            requireInvariant shares_sum_eq_totalShares();
+            requireInvariant released_sum_totalReleased();
+            requireInvariant payee_shares_gt_zero();
+
+            require currentContract.payees.length < 3;
+            require currentContract.totalReleased == 0;
+
+            require forall address addr .
+                currentContract.released[addr] == 0;
+
+        }
+    }

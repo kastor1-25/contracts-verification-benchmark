@@ -32,6 +32,7 @@ contract PaymentSplitter {
     }
 
     function release(address payable account) public virtual {
+        require (initialized, "PaymentSplitter: initialization phase is not over");
         require(shares[account] > 0, "PaymentSplitter: account has no shares");
 
         uint256 payment = releasable(account);
@@ -68,7 +69,7 @@ contract PaymentSplitter {
         initialized = true;
     }
 
-    function addPayee(address account, uint256 shares_) private {
+    function addPayee(address account, uint256 shares_) public {
 
         require(numPayees < PAYEES);
         require(owner == msg.sender, "PaymentSplitter: only owner can add payees");

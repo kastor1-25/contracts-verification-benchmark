@@ -7,9 +7,6 @@ rule releasable_sum_balance {
     requireInvariant shares_sum_eq_totalShares();
     requireInvariant released_sum_totalReleased();
     requireInvariant payee_shares_gt_zero();
-    
-    mathint releasable = getTotalReleasable(); // hard to do with ghosts
-    mathint balance = getBalance();
 
     assert getTotalReleasable() == getBalance();
 }
