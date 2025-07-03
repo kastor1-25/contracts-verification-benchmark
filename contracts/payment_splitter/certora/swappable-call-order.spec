@@ -11,7 +11,7 @@ rule swappable_call_order {
     uint index1;
     uint index2;
 
-    require index1 != index2; //without this, certora imagines stuff
+    require index1 != index2;
     
     require index1 < currentContract.payees.length;
     require index2 < currentContract.payees.length;
@@ -19,21 +19,14 @@ rule swappable_call_order {
     address addr1 = currentContract.payees[index1];
     address addr2 = currentContract.payees[index2];
 
-    storage initial = lastStorage; // 8 wei; 2 share
+    storage initial = lastStorage;
 
-    release(e, addr1); // -> PaymentSplitter.call{value: v1} 4 wei -> 7
-    release(e, addr2); // -> PaymentSplitter.call{value: v2} 4+3 -> 5
-    storage final1 = lastStorage;// 4+5
+    release(e, addr1);
+    release(e, addr2);
+    storage final1 = lastStorage;
 
-    release(e, addr2) at initial; // -> PaymentSplitter.call{value: v2} 4 wei -> 5
-    release(e, addr1);           // -> PaymentSplitter.call{value: v1}  4+2 -> 7
-    storage final2 = lastStorage; //3+7 
-
+    release(e, addr2) at initial;
+    release(e, addr1);
+    storage final2 = lastStorage;
     assert final1 == final2;
 }
-
-
-
-
-
-

@@ -8,7 +8,7 @@ rule zero_dust {
     requireInvariant released_sum_totalReleased();
     requireInvariant payee_shares_gt_zero();
 
-    uint index1;
+/*     uint index1;
     uint index2;
 
     require index1 != index2;
@@ -20,8 +20,7 @@ rule zero_dust {
     require currentContract.shares[currentContract.payees[index1]] > 0;
     require currentContract.shares[currentContract.payees[index2]] > 0;
     
+    require currentContract.payees[index1] != currentContract.payees[index2]; */
 
-/*     require currentContract.payees[index1] != currentContract.payees[index2];
- */
     assert currentContract.getTotalReleasable() == getBalance();
 }

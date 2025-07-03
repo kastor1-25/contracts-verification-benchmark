@@ -4,8 +4,11 @@
 pragma solidity ^0.8.0;
 
 /// @custom:version conformant to specification
-
 contract PaymentSplitter {
+
+    uint256 private constant PAYEES = 3;
+    address private owner;
+    uint256 private numPayees = 0;
 
     uint256 private totalShares;
     uint256 private totalReleased;
@@ -14,16 +17,25 @@ contract PaymentSplitter {
     mapping(address => uint256) private released;
     address[] private payees;
     
-        // ghost variables
-    uint _total_releasable;
+/*     constructor(address[] memory payees_, uint256[] memory shares_) payable {
+        owner = msg.sender;
 
-    constructor(address[] memory payees_, uint256[] memory shares_) payable {
         require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees_.length > 0, "PaymentSplitter: no payees");
+        require (payees_.length <= PAYEES, "PaymentSplitter: too many payees");
 
-        for (uint256 i = 0; i < payees_.length; i++) {
-            addPayee(payees_[i], shares_[i]);
-        }
+        addPayee(payees_[0], shares_[0]);
+        addPayee(payees_[1], shares_[1]);
+        addPayee(payees_[2], shares_[2]);
+    } 
+ */
+    constructor (address payee1, uint256 shares1, address payee2, uint256 shares2, address payee3, uint256 shares3) payable {
+        owner = msg.sender;
+
+        require(numPayees < PAYEES);
+        addPayee(payee1, shares1);
+        addPayee(payee2, shares2);
+        addPayee(payee3, shares3);
     }
 
     receive() external payable virtual { }
@@ -59,7 +71,12 @@ contract PaymentSplitter {
         return (totalReceived * shares[account]) / totalShares - alreadyReleased;
     }
 
+
     function addPayee(address account, uint256 shares_) private {
+
+        require(numPayees < PAYEES);
+        require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
+        
         require(account != address(0), "PaymentSplitter: account is the zero address");
         require(shares_ > 0, "PaymentSplitter: shares are 0");
         require(shares[account] == 0, "PaymentSplitter: account already has shares");
@@ -67,38 +84,16 @@ contract PaymentSplitter {
         payees.push(account);
         shares[account] = shares_;
         totalShares = totalShares + shares_;
+        numPayees+=1;
     }
+    
+    // TODO
+    function invariant(uint256 index) public view {
+        require(index < payees.length);
+    
+        address account = payees[index];
+        uint256 totalReceived = address(this).balance + totalReleased;
 
-    // releasable-balance-check invariant
-    function invariant(uint index) public view {
-        require(index < payees.length, "Index out of bounds");
-        assert(releasable(payees[index]) <= address(this).balance);
+        assert(released[account] + releasable(account) == totalReceived * shares[account] / totalShares);
     }
-
 }
-
-
-/*
-
-rule releasable_balance_check {
-    
-    requireInvariant shares_sum_eq_totalShares();
-    requireInvariant released_sum_totalReleased();
-    requireInvariant payee_shares_gt_zero();
-
-    require currentContract.payees.length < 4;
-
-    uint index;
-
-    require index < currentContract.payees.length;
-
-    address payee = currentContract.payees[index];
-
-    
-    mathint releasable = releasable(payee);
-    mathint balance = getBalance();
-    
-    assert releasable(payee) <= getBalance();
-}
-
- */

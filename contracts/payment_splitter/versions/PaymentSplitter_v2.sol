@@ -8,8 +8,6 @@ pragma solidity ^0.8.0;
 contract PaymentSplitter {
 
     uint256 private constant PAYEES = 3;
-
-    bool private initialized = false;
     address private owner;
     uint256 private numPayees = 0;
 
@@ -20,8 +18,25 @@ contract PaymentSplitter {
     mapping(address => uint256) private released;
     address[] private payees;
     
-    constructor() payable {
+/*     constructor(address[] memory payees_, uint256[] memory shares_) payable {
         owner = msg.sender;
+
+        require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
+        require(payees_.length > 0, "PaymentSplitter: no payees");
+        require (payees_.length <= PAYEES, "PaymentSplitter: too many payees");
+
+        addPayee(payees_[0], shares_[0]);
+        addPayee(payees_[1], shares_[1]);
+        addPayee(payees_[2], shares_[2]);
+    } 
+ */
+    constructor (address payee1, uint256 shares1, address payee2, uint256 shares2, address payee3, uint256 shares3) payable {
+        owner = msg.sender;
+
+        require(numPayees < PAYEES);
+        addPayee(payee1, shares1);
+        addPayee(payee2, shares2);
+        addPayee(payee3, shares3);
     }
 
     receive() external payable virtual { }
@@ -32,7 +47,6 @@ contract PaymentSplitter {
     }
 
     function release(address payable account) public virtual {
-        require (initialized, "PaymentSplitter: initialization phase is not over");
         require(shares[account] > 0, "PaymentSplitter: account has no shares");
 
         uint256 payment = releasable(account);
@@ -59,21 +73,10 @@ contract PaymentSplitter {
     }
 
 
-    function stopInitialization() external {
-
-        require(numPayees == PAYEES, "PaymentSplitter: not enough payees to stop initialization");
-
-        require(msg.sender == owner, "PaymentSplitter: only owner can stop initialization");
-        require(!initialized, "PaymentSplitter: initialization phase is over");
-
-        initialized = true;
-    }
-
-    function addPayee(address account, uint256 shares_) public {
+    function addPayee(address account, uint256 shares_) private {
 
         require(numPayees < PAYEES);
         require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
-        require(!initialized, "PaymentSplitter: initialization phase is over");
         
         require(account != address(0), "PaymentSplitter: account is the zero address");
         require(shares_ > 0, "PaymentSplitter: shares are 0");

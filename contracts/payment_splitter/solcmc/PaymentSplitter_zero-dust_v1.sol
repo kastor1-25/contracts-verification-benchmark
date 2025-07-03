@@ -13,10 +13,7 @@ contract PaymentSplitter {
     mapping(address => uint256) private shares;
     mapping(address => uint256) private released;
     address[] private payees;
-    
-        // ghost variables
-    uint _total_releasable;
-
+  
     constructor(address[] memory payees_, uint256[] memory shares_) payable {
         require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees_.length > 0, "PaymentSplitter: no payees");
@@ -69,36 +66,14 @@ contract PaymentSplitter {
         totalShares = totalShares + shares_;
     }
 
-    // releasable-balance-check invariant
-    function invariant(uint index) public view {
-        require(index < payees.length, "Index out of bounds");
-        assert(releasable(payees[index]) <= address(this).balance);
-    }
+    
+    function invariant() public view{
 
+        uint _total_releasable = 0;
+        for (uint i = 0; i < payees.length; i++) {
+            _total_releasable += releasable(payees[i]);
+        }
+        
+        assert(_total_releasable == address(this).balance);
+    }   
 }
-
-
-/*
-
-rule releasable_balance_check {
-    
-    requireInvariant shares_sum_eq_totalShares();
-    requireInvariant released_sum_totalReleased();
-    requireInvariant payee_shares_gt_zero();
-
-    require currentContract.payees.length < 4;
-
-    uint index;
-
-    require index < currentContract.payees.length;
-
-    address payee = currentContract.payees[index];
-
-    
-    mathint releasable = releasable(payee);
-    mathint balance = getBalance();
-    
-    assert releasable(payee) <= getBalance();
-}
-
- */

@@ -48,7 +48,7 @@ invariant fair_split (uint index1)
             requireInvariant payee_shares_gt_zero();
         }
 
-        preserved addPayee(address a, uint shares_) with (env e){
+/*         preserved addPayee(address a, uint shares_) with (env e){
             requireInvariant shares_sum_eq_totalShares();
             requireInvariant released_sum_totalReleased();
             requireInvariant payee_shares_gt_zero();
@@ -59,5 +59,5 @@ invariant fair_split (uint index1)
             require forall address addr .
                 currentContract.released[addr] == 0;
 
-        }
+        } */
     }

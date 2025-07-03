@@ -29,8 +29,8 @@ These functions expose key pieces of information and perform aggregation calcula
 ## Ground truth
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | 1                        | 0                        | 1                        | 1                        | 1                        | 1                        | 1                        | 0                        | 0                        |
-| **v2** | 1                        | 0                        | 1                        | 1                        | 1                        | 1                        | 1                        | 0                        | 0                        |
+| **v1** | 1                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
+| **v2** | 1                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
  
 
 ## Experiments
@@ -38,22 +38,22 @@ These functions expose key pieces of information and perform aggregation calcula
 #### Z3
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | UNK                      | ERR                      | UNK                      | UNK                      | UNK                      | UNK                      | UNK                      | ERR                      | ND                       |
-| **v2** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
+| **v1** | FN                       | ND                       | UNK                      | UNK                      | UNK                      | TN                       | ND                       | ERR                      | TN                       |
+| **v2** | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
  
 
 #### ELD
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | UNK                      | ERR                      | UNK                      | UNK                      | UNK                      | UNK                      | UNK                      | ERR                      | ND                       |
-| **v2** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
+| **v1** | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
+| **v2** | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
  
 
 
 ### Certora
 |        | fair-split               | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | TP!                      | TN                       | FN                       | TP!                      | TP!                      | TP!                      | TP!                      | FP!                      | TN                       |
-| **v2** | FN                       | TN                       | FN                       | TP!                      | FN                       | FN                       | TP!                      | TN                       | TN                       |
+| **v1** | TP!                      | TN                       | FN                       | TP!                      | TP!                      | FP!                      | TP!                      | FP!                      | TN                       |
+| **v2** | TP!                      | TN                       | FN                       | TP!                      | FN                       | TN                       | TP!                      | TN                       | TN                       |
  
 
