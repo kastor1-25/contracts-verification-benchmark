@@ -9,7 +9,7 @@ rule non_zero_payees {
 
     uint index;
 
-    require index < currentContract.payees.length;
+    require index < currentContract.getPayeesLength();
     address addr = currentContract.payees[index];
     assert addr != 0;
 }

@@ -13,8 +13,8 @@ rule swappable_call_order {
 
     require index1 != index2;
     
-    require index1 < currentContract.payees.length;
-    require index2 < currentContract.payees.length;
+    require index1 < currentContract.getPayeesLength();
+    require index2 < currentContract.getPayeesLength();
 
     address addr1 = currentContract.payees[index1];
     address addr2 = currentContract.payees[index2];

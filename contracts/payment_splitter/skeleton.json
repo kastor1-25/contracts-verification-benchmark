@@ -2,7 +2,8 @@
     "name": "Payment Splitter",
     "specification": "file:spec.md" ,
     "properties": {
-        "fair-split": " for every account `a` in `payees`, `released[a] + releasable(a) == (totalXReceived * shares[a]) / totalShares`.",
+        "fair-split": " for every account `a` in `payees`, `released[a] + releasable(a) == (totalReceived * shares[a]) / totalShares`.",
+        "fair-split-for-v3": " for every account `a` in `payees`, `released[a] <= (totalReceived + totalReleased) / 3`.",
         "funds-get-transfered": " for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.",
         "non-zero-payees": " for all accounts `a` in `payees`, `a != address(0)`.",
         "positive-shares": " for all addresses `addr` in `payees`, `shares[addr] > 0`.",

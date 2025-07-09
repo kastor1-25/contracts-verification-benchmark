@@ -108,4 +108,8 @@ contract PaymentSplitter {
         }
         return sum;
     }
+
+    function getPayeesLength() public view returns (uint) {
+        return payees.length;
+    }
 }

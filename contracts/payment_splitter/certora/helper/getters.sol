@@ -19,3 +19,5 @@ function getShares(address addr) public view returns (uint) {
         return shares[addr];
 }
 
+
+

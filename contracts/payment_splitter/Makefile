@@ -14,7 +14,7 @@ README = ./README.md
 BUILD_DIR = ./build
 
 # SOLCMC params
-to = 10m
+to = 1s
 Z3_DIR = $(BUILD_DIR)/z3
 Z3_OUT = $(Z3_DIR)/out.csv
 Z3_CM = $(Z3_DIR)/cm.csv

@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.0;
 
-/// @custom:version conformant to specification
+/// @custom:version this version has a fixed number of payees (3) and does not accept dynamic shares.
 
 contract PaymentSplitter {
 
@@ -11,39 +11,56 @@ contract PaymentSplitter {
     address private owner;
     uint256 private numPayees = 0;
 
-    uint256 private totalShares;
-    uint256 private totalReleased;
+    uint256 private totalShares = 0;
+    uint256 private totalReleased = 0;
 
     mapping(address => uint256) private shares;
     mapping(address => uint256) private released;
-    address[] private payees;
+    address[3] private payees;
     
-/*     constructor(address[] memory payees_, uint256[] memory shares_) payable {
-        owner = msg.sender;
 
-        require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
-        require(payees_.length > 0, "PaymentSplitter: no payees");
-        require (payees_.length <= PAYEES, "PaymentSplitter: too many payees");
-
-        addPayee(payees_[0], shares_[0]);
-        addPayee(payees_[1], shares_[1]);
-        addPayee(payees_[2], shares_[2]);
-    } 
- */
-    constructor (address payee1, uint256 shares1, address payee2, uint256 shares2, address payee3, uint256 shares3) payable {
-        owner = msg.sender;
-
-        require(numPayees < PAYEES);
-        addPayee(payee1, shares1);
-        addPayee(payee2, shares2);
-        addPayee(payee3, shares3);
-    }
+constructor (address payee1, address payee2, address payee3) payable {
+    owner = msg.sender;
+    
+    // Add payee1 at position 0
+    require(numPayees < PAYEES);
+    require(payee1 != address(0), "PaymentSplitter: account is the zero address");
+    require(shares[payee1] == 0, "PaymentSplitter: account already has shares");
+    
+    payees[0] = payee1;
+    shares[payee1] = 1;
+    released[payee1] = 0;
+    totalShares = totalShares + 1;
+    numPayees += 1;
+    
+    // Add payee2 at position 1
+    require(numPayees < PAYEES);
+    require(payee2 != address(0), "PaymentSplitter: account is the zero address");
+    require(shares[payee2] == 0, "PaymentSplitter: account already has shares");
+    
+    payees[1] = payee2;
+    shares[payee2] = 1;
+    released[payee2] = 0;
+    totalShares = totalShares + 1;
+    numPayees += 1;
+    
+    // Add payee3 at position 2
+    require(numPayees < PAYEES);
+    require(payee3 != address(0), "PaymentSplitter: account is the zero address");
+    require(shares[payee3] == 0, "PaymentSplitter: account already has shares");
+    
+    payees[2] = payee3;
+    shares[payee3] = 1;
+    released[payee3] = 0;
+    totalShares = totalShares + 1;
+    numPayees += 1;
+}
 
     receive() external payable virtual { }
 
     function releasable(address account) public view returns (uint256) {
         uint256 totalReceived = address(this).balance + totalReleased;
-        return pendingPayment(account, totalReceived, released[account]);
+        return pendingPayment(totalReceived, released[account]);
     }
 
     function release(address payable account) public virtual {
@@ -65,28 +82,27 @@ contract PaymentSplitter {
     }
 
     function pendingPayment(
-        address account,
         uint256 totalReceived,
         uint256 alreadyReleased
-    ) private view returns (uint256) {
-        return (totalReceived * shares[account]) / totalShares - alreadyReleased;
+    ) private pure returns (uint256) {
+        return (totalReceived / PAYEES) - alreadyReleased;
     }
 
 
-    function addPayee(address account, uint256 shares_) private {
+/*     function addPayee(address account, uint256 position) private {
 
         require(numPayees < PAYEES);
-        require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
+        // require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
         
         require(account != address(0), "PaymentSplitter: account is the zero address");
-        require(shares_ > 0, "PaymentSplitter: shares are 0");
         require(shares[account] == 0, "PaymentSplitter: account already has shares");
 
-        payees.push(account);
-        shares[account] = shares_;
-        totalShares = totalShares + shares_;
-        numPayees+=1;
-    }
+        payees[position] = account;
+        shares[account] = 1;
+        released[account] = 0;
+        totalShares = totalShares + 1;
+        numPayees += 1;
+    } */
 
     // Getters
 
@@ -107,7 +123,7 @@ contract PaymentSplitter {
     }
 
     function getPayee(uint index) public view returns (address) {
-        require(index < payees.length);
+        require(index < 3);
         return payees[index];
     }
 
@@ -138,7 +154,7 @@ contract PaymentSplitter {
         return sum;
     }
 
-    function getPayeesLength() public view returns (uint) {
-        return payees.length;
+    function getPayeesLength() public pure returns (uint) {
+        return 3;
     }
 }

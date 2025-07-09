@@ -31,16 +31,15 @@ import "helper/invariants.spec";
     assert addrReleased <= totalReceived * currentContract.shares[addr] / currentContract.totalShares;
 } */
 
-
-
-invariant fair_split (uint index1)
-    index1 < currentContract.payees.length =>
-
-    getReleased(currentContract.payees[index1]) <= (
+invariant fair_split (uint index)
+    
+    index < currentContract.getPayeesLength() => 
+    
+    getReleased(currentContract.payees[index]) <= (
         (getBalance() + currentContract.totalReleased) * 
-        currentContract.shares[currentContract.payees[index1]] /
+        currentContract.shares[currentContract.payees[index]] /
         currentContract.totalShares
-    )
+    ) 
     {
         preserved {
             requireInvariant shares_sum_eq_totalShares();
