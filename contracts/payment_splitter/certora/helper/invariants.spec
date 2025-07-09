@@ -15,3 +15,8 @@ invariant payee_shares_gt_zero ()
 invariant released_sum_totalReleased()
     getSumOfReleased() == currentContract.totalReleased;
 
+
+invariant out_of_bounds_payee()
+    forall uint index. index >= currentContract.payees.length =>
+    currentContract.shares[currentContract.payees[index]] == 0;
+
