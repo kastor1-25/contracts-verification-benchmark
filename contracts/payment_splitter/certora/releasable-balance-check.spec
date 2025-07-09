@@ -9,7 +9,9 @@ rule releasable_balance_check {
     requireInvariant released_sum_totalReleased();
     requireInvariant payee_shares_gt_zero();
 
-    require currentContract.payees.length < 4;
+    requireInvariant out_of_bounds_payee();
+
+    require currentContract.payees.length == 3;
 
     uint index;
 
