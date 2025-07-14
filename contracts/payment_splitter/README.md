@@ -32,7 +32,7 @@ These functions expose key pieces of information and perform aggregation calcula
 |        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | 1                        | 0                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
-| **v2** | 1                        | 1                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
+| **v2** | 1                        | 0                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
 | **v3** | 1                        | 1                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
  
 
@@ -41,9 +41,9 @@ These functions expose key pieces of information and perform aggregation calcula
 #### Z3
 |        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
+| **v1** | FN                       | ND                       | ND                       | UNK                      | UNK                      | FN                       | TN                       | ND                       | ERR                      | TN                       |
 | **v2** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
-| **v3** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
+| **v3** | TP!                      | ND                       | ND                       | UNK                      | TP!                      | TP!                      | TN                       | ND                       | ERR                      | TN                       |
  
 
 #### ELD
@@ -51,7 +51,7 @@ These functions expose key pieces of information and perform aggregation calcula
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
 | **v2** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
-| **v3** | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       | ND                       |
+| **v3** | TP!                      | ND                       | ND                       | TP!                      | TP!                      | TP!                      | TN!                      | ND                       | ERR                      | TN!                      |
  
 
 
@@ -59,7 +59,7 @@ These functions expose key pieces of information and perform aggregation calcula
 |        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | TP!                      | TN                       | TN                       | FN                       | TP!                      | TP!                      | FP!                      | TP!                      | FP!                      | TN                       |
-| **v2** | TP!                      | FN                       | TN                       | FN                       | FN                       | FN                       | TN                       | TP!                      | TN                       | TN                       |
-| **v3** | FN                       | TP!                      | TN                       | FN                       | FN                       | FN                       | TN                       | TP!                      | TN                       | TN                       |
+| **v2** | TP!                      | TN                       | TN                       | FN                       | FN                       | FN                       | TN                       | TP!                      | TN                       | TN                       |
+| **v3** | FN                       | TP!                      | TN                       | FN                       | TP!                      | FN                       | TN                       | TP!                      | TN                       | TN                       |
  
 
