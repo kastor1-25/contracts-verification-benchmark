@@ -1,7 +1,5 @@
 import "helper/methods.spec";
 
-// If you call release twice in a row, the second call should revert
-
 rule release_release_revert {
     env e1; 
     uint index;
@@ -18,7 +16,6 @@ rule release_release_revert {
     require balanceAfter == balanceBefore - released;  // This require also makes sure that the first call does not revert
 
     release@withrevert(e1,addr); // Second release call, should revert
-    
     assert lastReverted;
 }
 

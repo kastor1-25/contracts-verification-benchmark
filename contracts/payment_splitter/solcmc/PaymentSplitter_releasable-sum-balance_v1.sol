@@ -14,9 +14,6 @@ contract PaymentSplitter {
     mapping(address => uint256) private released;
     address[] private payees;
     
-        // ghost variables
-    uint _total_releasable;
-
     constructor(address[] memory payees_, uint256[] memory shares_) payable {
         require(payees_.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees_.length > 0, "PaymentSplitter: no payees");
@@ -70,8 +67,8 @@ contract PaymentSplitter {
     }
 
     // releasable-sum-balance invariant 
-    function invariant() public {
-        _total_releasable = 0;
+    function invariant() public view {
+        uint _total_releasable = 0;
         for (uint i = 0; i < payees.length; i++) {
             _total_releasable += releasable(payees[i]);
         }

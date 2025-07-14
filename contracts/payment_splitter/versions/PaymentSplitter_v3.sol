@@ -8,7 +8,6 @@ pragma solidity ^0.8.0;
 contract PaymentSplitter {
 
     uint256 private constant PAYEES = 3;
-    address private owner;
     uint256 private numPayees = 0;
 
     uint256 private totalShares = 0;
@@ -20,10 +19,6 @@ contract PaymentSplitter {
     
 
 constructor (address payee1, address payee2, address payee3) payable {
-    owner = msg.sender;
-    
-    // Add payee1 at position 0
-    require(numPayees < PAYEES);
     require(payee1 != address(0), "PaymentSplitter: account is the zero address");
     require(shares[payee1] == 0, "PaymentSplitter: account already has shares");
     
@@ -33,8 +28,6 @@ constructor (address payee1, address payee2, address payee3) payable {
     totalShares = totalShares + 1;
     numPayees += 1;
     
-    // Add payee2 at position 1
-    require(numPayees < PAYEES);
     require(payee2 != address(0), "PaymentSplitter: account is the zero address");
     require(shares[payee2] == 0, "PaymentSplitter: account already has shares");
     
@@ -44,8 +37,6 @@ constructor (address payee1, address payee2, address payee3) payable {
     totalShares = totalShares + 1;
     numPayees += 1;
     
-    // Add payee3 at position 2
-    require(numPayees < PAYEES);
     require(payee3 != address(0), "PaymentSplitter: account is the zero address");
     require(shares[payee3] == 0, "PaymentSplitter: account already has shares");
     
@@ -88,22 +79,6 @@ constructor (address payee1, address payee2, address payee3) payable {
         return (totalReceived / PAYEES) - alreadyReleased;
     }
 
-
-/*     function addPayee(address account, uint256 position) private {
-
-        require(numPayees < PAYEES);
-        // require(owner == msg.sender, "PaymentSplitter: only owner can add payees");
-        
-        require(account != address(0), "PaymentSplitter: account is the zero address");
-        require(shares[account] == 0, "PaymentSplitter: account already has shares");
-
-        payees[position] = account;
-        shares[account] = 1;
-        released[account] = 0;
-        totalShares = totalShares + 1;
-        numPayees += 1;
-    } */
-
     // Getters
 
     function getBalance() public view returns (uint) {
@@ -113,11 +88,9 @@ constructor (address payee1, address payee2, address payee3) payable {
     function getTotalReleasable() public view returns (uint) {
         uint _total_releasable = 0;
 
-        
         _total_releasable += releasable(payees[0]);
         _total_releasable += releasable(payees[1]);
         _total_releasable += releasable(payees[2]);
-
 
         return _total_releasable;
     }

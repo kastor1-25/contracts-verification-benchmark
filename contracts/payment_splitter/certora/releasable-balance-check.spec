@@ -16,14 +16,5 @@ rule releasable_balance_check {
     uint index;
 
     require index < currentContract.getPayeesLength();
-/*     requireInvariant fair_split(index);
- */
-
-    address payee = currentContract.payees[index];
-
-    
-    mathint releasable = releasable(payee);
-    mathint balance = getBalance();
-    
-    assert releasable(payee) <= getBalance();
+    assert releasable(currentContract.payees[index]) <= getBalance();
 }
