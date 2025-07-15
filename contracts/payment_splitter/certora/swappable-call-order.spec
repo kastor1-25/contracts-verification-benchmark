@@ -29,4 +29,4 @@ rule swappable_call_order {
     release(e, addr1);
     storage final2 = lastStorage;
     assert final1 == final2;
-}
+} 

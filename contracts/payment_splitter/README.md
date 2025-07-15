@@ -41,17 +41,17 @@ These functions expose key pieces of information and perform aggregation calcula
 #### Z3
 |        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | FN                       | ND                       | ND                       | UNK                      | UNK                      | FN                       | TN                       | ND                       | ERR                      | TN                       |
-| **v2** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
-| **v3** | TP!                      | ND                       | ND                       | UNK                      | TP!                      | TP!                      | TN                       | ND                       | ERR                      | TN                       |
+| **v1** | UNK                      | ERR                      | ND                       | UNK                      | UNK                      | FN                       | TN                       | ND                       | ND                       | TN                       |
+| **v2** | UNK                      | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | TN!                      | ND                       | ND                       | TN!                      |
+| **v3** | UNK                      | TP!                      | ND                       | UNK                      | TP!                      | TP!                      | UNK                      | ND                       | ND                       | UNK                      |
  
 
 #### ELD
 |        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| **v1** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
-| **v2** | UNK                      | ND                       | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ERR                      | UNK                      |
-| **v3** | TP!                      | ND                       | ND                       | TP!                      | TP!                      | TP!                      | TN!                      | ND                       | ERR                      | TN!                      |
+| **v1** | UNK                      | ERR                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ND                       | UNK                      |
+| **v2** | UNK                      | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ND                       | UNK                      |
+| **v3** | TP!                      | TP!                      | ND                       | TP!                      | TP!                      | TP!                      | TN!                      | ND                       | ND                       | TN!                      |
  
 
 
