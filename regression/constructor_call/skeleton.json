@@ -2,6 +2,6 @@
     "name": "Constructor Call",
     "specification": "file:specs.md",
     "properties": {
-        "": "after calling the function `d` from abstract contract `D`, `x` remains unchanged"
+        "sum-matches-array-values": "The sum calculated by the contract during the constructor matches the sum of the values in the array passed to it."
     }
 }

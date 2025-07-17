@@ -2,9 +2,9 @@ MAKEFLAGS = --no-print-directory
 
 # CHANGE THIS PATHS
 # Original contract path
-CONTRACT = ./ConstructorCall_v1.sol
+CONTRACT = ./versions/
 # Contract with solcmc instrumentation path
-SOLCMC_CONTRACT = ./solcmc
+SOLCMC_CONTRACT = ./solcmc/generated
 # Certora specifications path
 CERTORA_SPEC = ./certora
 
@@ -35,7 +35,7 @@ CERTORA_LOGS = $(CERTORA_DIR)/logs
 
 PYTHON = python3
 
-.PHONY: all certora solcmc plain clean cleanr
+.PHONY: all certora solcmc solcmc-contracts plain clean cleanr
 
 all: plain solcmc certora
 	@echo "Adding Solcmc table to README..."
@@ -63,7 +63,10 @@ $(CERTORA_OUT): setup
 	@$(PYTHON) ../../scripts/run_certora.py --contracts $(CONTRACT) --specs $(CERTORA_SPEC) --output $(CERTORA_DIR)
 
 #---------------------------- SOLCMC -----------------------------#
-solcmc: $(Z3_TABLE) $(ELD_TABLE)
+solcmc: solcmc-contracts $(Z3_TABLE) $(ELD_TABLE)
+
+solcmc-contracts:
+	$(MAKE) -C solcmc build
 
 # Solcmc with Z3
 # Make markdown table

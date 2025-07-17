@@ -1,3 +1,6 @@
+# Constructor Call
+
+## Specification
 The `ConstructorCall` contract is designed to initialize and manage a list of values provided during contract deployment. It performs basic aggregation and storage operations on these values, ensuring certain constraints are met. Below are the key specifications:
 
 ## **Initialization via Constructor**
@@ -31,4 +34,36 @@ The `ConstructorCall` contract is designed to initialize and manage a list of va
   - Can be used for testing or extension.
 
 
+
+
+
+## Properties
+- **sum-matches-array-values**: The sum calculated by the contract during the constructor matches the sum of the values in the array passed to it.
+
+## Ground truth
+|        | sum-matches-array-values |
+|--------|--------------------------|
+| **v1** | 1                        |
+ 
+
+## Experiments
+### SolCMC
+#### Z3
+|        | sum-matches-array-values |
+|--------|--------------------------|
+| **v1** | UNK                      |
+ 
+
+#### ELD
+|        | sum-matches-array-values |
+|--------|--------------------------|
+| **v1** | FN!                      |
+ 
+
+
+### Certora
+|        | sum-matches-array-values |
+|--------|--------------------------|
+| **v1** | FN                       |
+ 
 
