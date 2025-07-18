@@ -12,9 +12,9 @@ CONTRACTS_DIR   := generated          # output finale
 $(CONTRACTS_DIR):
 	@mkdir -p $@
 
-# 2. compila tutti i (version, property) con lo script builder
+# 2. esegue “clean” PRIMA di compilare tutti i (version, property)
 #    (lo script crea i file, quindi basta fare ‘touch’ su CONTRACTS_DIR )
-build: $(CONTRACTS_DIR)
+build: clean $(CONTRACTS_DIR)
 	@echo "▶ running builder.py …"
 	@$(PYTHON) ../../../scripts/builder.py \
 	    --versions   $(VERSIONS_DIR) \
