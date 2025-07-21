@@ -1,3 +1,4 @@
+
 const {
     loadFixture
 } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
@@ -22,14 +23,14 @@ describe("PaymentSplitter", function () {
             value: ethers.parseUnits("4", "wei")
         }));
 
-        return { PaymentSplitter, payees};
+        return { PaymentSplitter };
     };
 
-    it ("zero dust certora", async function() {
-        const { PaymentSplitter, payees } = await loadFixture(deployContract);
+    it ("Releasable sum balance", async function() {
+        const { PaymentSplitter} = await loadFixture(deployContract);
         const balance = await PaymentSplitter.balanceOf(PaymentSplitter.getAddress());    
         const totalReleasable = await PaymentSplitter.getTotalReleasable();
         
-        expect(totalReleasable).to.be.lessThan(balance);
+        expect(totalReleasable).to.equal(balance);
     })
 });

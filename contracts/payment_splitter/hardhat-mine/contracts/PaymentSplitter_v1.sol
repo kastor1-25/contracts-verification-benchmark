@@ -69,5 +69,13 @@ contract PaymentSplitter {
     function balanceOf(address a) public view returns (uint) {
         return a.balance;
     }
+    
+    function getTotalReleasable() public view returns (uint) {
+        uint _total_releasable = 0;
+        for (uint i = 0; i < payees.length; i++) {
+            _total_releasable += releasable(payees[i]);
+        }
+        return _total_releasable;
+    }
 
 }
