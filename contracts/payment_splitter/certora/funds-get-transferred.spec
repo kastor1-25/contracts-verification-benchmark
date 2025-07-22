@@ -1,6 +1,6 @@
 import "helper/methods.spec";
 
-rule funds_get_transfered {
+rule funds_get_transferred {
     env e; 
     address addr;
 

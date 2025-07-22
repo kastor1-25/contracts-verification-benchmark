@@ -14,7 +14,7 @@ These functions expose key pieces of information and perform aggregation calcula
 ## Properties
 - **fair-split**:  for every account `a` in `payees`, `released[a] + releasable(a) == (totalReceived * shares[a]) / totalShares`.
 - **fair-split-for-v3**:  for every account `a` in `payees`, `released[a] <= (totalReceived + totalReleased) / 3`.
-- **funds-get-transfered**:  for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.
+- **funds-get-transferred**:  for all accounts `a` in `payees`, if `releasable(a) > 0`, then `release(a)` does not revert.
 - **non-zero-payees**:  for all accounts `a` in `payees`, `a != address(0)`.
 - **positive-shares**:  for all addresses `addr` in `payees`, `shares[addr] > 0`.
 - **releasable-balance-check**:  for all addresses `addr` in `payees`, `releasable(addr)` is less than or equal to the balance of the contract.
@@ -29,7 +29,7 @@ These functions expose key pieces of information and perform aggregation calcula
 - **v3**: this version has a fixed number of payees (3) and does not accept dynamic shares.
 
 ## Ground truth
-|        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
+|        | fair-split               | fair-split-for-v3        | funds-get-transferred     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | 1                        | 0                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
 | **v2** | 1                        | 0                        | 0                        | 1                        | 1                        | 1                        | 0                        | 1                        | 0                        | 0                        |
@@ -39,7 +39,7 @@ These functions expose key pieces of information and perform aggregation calcula
 ## Experiments
 ### SolCMC
 #### Z3
-|        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
+|        | fair-split               | fair-split-for-v3        | funds-get-transferred     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | UNK                      | ERR                      | ND                       | UNK                      | UNK                      | FN                       | TN                       | ND                       | ND                       | TN                       |
 | **v2** | UNK                      | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | TN!                      | ND                       | ND                       | TN!                      |
@@ -47,7 +47,7 @@ These functions expose key pieces of information and perform aggregation calcula
  
 
 #### ELD
-|        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
+|        | fair-split               | fair-split-for-v3        | funds-get-transferred     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | UNK                      | ERR                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ND                       | UNK                      |
 | **v2** | UNK                      | UNK                      | ND                       | UNK                      | UNK                      | UNK                      | UNK                      | ND                       | ND                       | UNK                      |
@@ -56,7 +56,7 @@ These functions expose key pieces of information and perform aggregation calcula
 
 
 ### Certora
-|        | fair-split               | fair-split-for-v3        | funds-get-transfered     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
+|        | fair-split               | fair-split-for-v3        | funds-get-transferred     | non-zero-payees          | positive-shares          | releasable-balance-check | releasable-sum-balance   | release-release-revert   | swappable-call-order     | zero-dust                |
 |--------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | **v1** | TP!                      | TN                       | TN                       | FN                       | TP!                      | TP!                      | FP!                      | TP!                      | FP!                      | TN                       |
 | **v2** | TP!                      | TN                       | TN                       | FN                       | FN                       | FN                       | TN                       | TP!                      | TN                       | TN                       |
