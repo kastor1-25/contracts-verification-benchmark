@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.0;
 
-/// @custom:version conformant to specification
+/// @custom:modified version with removal of loops, the number of payees is fixed
 
 contract PaymentSplitter {
 
