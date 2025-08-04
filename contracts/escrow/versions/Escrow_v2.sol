@@ -29,6 +29,7 @@ contract Escrow {
         seller = seller_;
         arbiter = arbiter_;
         fee = fee_;
+        deposit = msg.value;
         state = State.AGREE;
     }
 
