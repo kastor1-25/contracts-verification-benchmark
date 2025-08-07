@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity >= 0.8.2;
 
-/// @custom:version conformant to specification.
+/// @custom:version allow arbitrate in any state.
 
 contract Escrow {
    enum State {AGREE, DISPUTE, ARBITRATED, REDEEM, END}
@@ -18,13 +18,13 @@ contract Escrow {
         _;
     }
  
-    uint deposit;       // buyer's deposit
+    uint public deposit;       // buyer's deposit
     address recipient;  // recipient agreed or chosen by the arbiter
 
     constructor (address seller_, address arbiter_, uint fee_) payable {
         require (seller_ != address(0) && arbiter_ != address(0));
         require(fee_ < msg.value);    // The fee cannot be more than the deposit
-
+    
         buyer = msg.sender;
         seller = seller_;
         arbiter = arbiter_;
@@ -50,7 +50,7 @@ contract Escrow {
         state = State.DISPUTE;
     }
 
-    function arbitrate(address dst) instate(State.DISPUTE) public {
+    function arbitrate(address dst) public {
         require(msg.sender == arbiter);
         require(dst == buyer || dst == seller);
     

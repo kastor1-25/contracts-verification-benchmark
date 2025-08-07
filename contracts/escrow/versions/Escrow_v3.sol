@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity >= 0.8.2;
 
-/// @custom:version conformant to specification.
+/// @custom:version the constructor does not set deposit variable.
 
 contract Escrow {
    enum State {AGREE, DISPUTE, ARBITRATED, REDEEM, END}
@@ -29,7 +29,6 @@ contract Escrow {
         seller = seller_;
         arbiter = arbiter_;
         fee = fee_;
-        deposit = msg.value;
         state = State.AGREE;
     }
 
