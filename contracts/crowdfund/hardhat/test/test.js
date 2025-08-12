@@ -1,55 +1,73 @@
-const {
-    loadFixture
-} = require("@nomicfoundation/hardhat-toolbox/network-helpers");
-
+const { loadFixture, mine } =
+    require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
-
-describe("Crowdfund", function () {
-
+describe("Crowdfund - reclaim reverts", function () {
     async function deployContract() {
+        const [deployer] = await ethers.getSigners();
 
-        const signers = await ethers.getSigners();
+        const nowBlock = await ethers.provider.getBlockNumber();
+        const endDonate = nowBlock + 5;
 
-        const owner = signers[0];
-        const donor = signers[1];
-        
-        const CrowdFund = await ethers.deployContract("Crowdfund", [
-            owner.address,
-            3,
-            1000
+        const goal = ethers.parseEther("1000");
+
+        const crowdfund = await ethers.deployContract("Crowdfund", [
+            await deployer.getAddress(),
+            endDonate,
+            goal,
         ]);
 
-        return { CrowdFund, donor };
-    };
+        const donor = await ethers.deployContract("RevertOnReceive");
 
-    it("donate-not-revert reverts for an overflow", async function () {
+        await donor.setCrowdfund(await crowdfund.getAddress());
 
-        const { CrowdFund, donor } = await loadFixture(deployContract);
-        
-        
+        await donor.donate({ value: ethers.parseEther("1") });
 
-        expect(await CrowdFund.connect(donor).donate({value: amount})).to.be.reverted;
+        const current = await ethers.provider.getBlockNumber();
+        const toMine = Math.max(1, endDonate - current + 1);
+        await mine(toMine);
+
+        return { crowdfund, donor, deployer};
+    }
+
+    it("reclaim() reverts if the donor's receive() reverts", async function () {
+        const { donor } = await loadFixture(deployContract);
+
+        await expect(donor.reclaim()).to.be.reverted;
     });
-      
-    it("donate-not-revert reverts for an overflow", async function () {
+});
 
-        const { CrowdFund, donor } = await loadFixture(deployContract);
-        
-        // set the donation amount to a value that will cause an overflow
-        const amount = BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639934");
+describe("Crowdfund - withdraw reverts", function () {
+    async function deployContract() {
+        const [donor] = await ethers.getSigners();
 
-        const t = "0x" + (BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639935")).toString(16)
-        await network.provider.send("hardhat_setBalance", [
-            donor.address,
-            t 
-        ]
-        )
-        
-        await CrowdFund.connect(donor).donate({value: amount})
+        const nowBlock = await ethers.provider.getBlockNumber();
+        const endDonate = nowBlock + 5;
 
-        const amount2 = ethers.parseUnits('3','Wei');
+        const goal = ethers.parseEther("1");
 
-        expect(await CrowdFund.connect(donor).donate({value: amount})).to.be.reverted;
+        const owner = await ethers.deployContract("RevertOnReceive");
+
+        const crowdfund = await ethers.deployContract("Crowdfund", [
+            await owner.getAddress(),
+            endDonate,
+            goal,
+        ]);
+
+        await owner.setCrowdfund(await crowdfund.getAddress());
+
+        await crowdfund.connect(donor).donate({ value: ethers.parseEther("1.1") });
+
+        const current = await ethers.provider.getBlockNumber();
+        const toMine = Math.max(1, endDonate - current + 1);
+        await mine(toMine);
+
+        return { crowdfund, owner, donor };
+    }
+
+    it("withdraw() reverts if the owner's receive() reverts", async function () {
+        const { owner } = await loadFixture(deployContract);
+        await expect(owner.withdraw()).to.be.reverted;
     });
 });
