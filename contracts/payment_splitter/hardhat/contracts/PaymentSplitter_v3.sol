@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 
 /// @custom:version this version has a fixed number of payees (3) and does not accept dynamic shares.
 
-contract PaymentSplitter {
+contract PaymentSplitter3 {
 
     uint256 private constant PAYEES = 3;
     uint256 private numPayees = 0;

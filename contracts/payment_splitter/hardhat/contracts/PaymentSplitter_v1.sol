@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 
 /// @custom:version conformant to specification
 
-contract PaymentSplitter {
+contract PaymentSplitter1 {
 
     uint256 private totalShares;
     uint256 private totalReleased;
@@ -69,7 +69,7 @@ contract PaymentSplitter {
     function balanceOf(address a) public view returns (uint) {
         return a.balance;
     }
-    
+
     function getTotalReleasable() public view returns (uint) {
         uint _total_releasable = 0;
         for (uint i = 0; i < payees.length; i++) {
@@ -77,5 +77,6 @@ contract PaymentSplitter {
         }
         return _total_releasable;
     }
+
 
 }
