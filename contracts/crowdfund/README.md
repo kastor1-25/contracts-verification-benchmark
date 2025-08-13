@@ -28,19 +28,18 @@ The contract implements the following methods:
 ## Ground truth
 |        | bal-decr-onlyif-wd-reclaim | donate-not-revert          | donate-not-revert-overflow | no-donate-after-deadline   | no-receive-after-deadline  | no-wd-if-no-goal           | owner-only-recv            | reclaim-not-revert         | wd-not-revert              | wd-not-revert-EOA          |
 |--------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
-| **v1** | 1                          | 0[^1]                      | 1                          | 1                          | 0[^2]                      | 1                          | 1                          | 0[^3]                      | 0[^4]                      | 1                          |
+| **v1** | 1                          | 1                          | 1                          | 1                          | 0[^1]                      | 1                          | 1                          | 0[^2]                      | 0[^3]                      | 1                          |
  
-[^1]: This property should be false, since the increment of the `donors` map could overflow.
-[^2]: This property should always be false, since a contract can receive ETH when its address is specified in a coinbase transaction or in a `selfdestruct`.
-[^3]: All funds may have been reclaimed already.
-[^4]: Receiver of the funds may revert the transaction.
+[^1]: This property should always be false, since a contract can receive ETH when its address is specified in a coinbase transaction or in a `selfdestruct`.
+[^2]: Receiver of the funds may revert the transaction.
+[^3]: Receiver of the funds may revert the transaction.
 
 ## Experiments
 ### SolCMC
 #### Z3
 |        | bal-decr-onlyif-wd-reclaim | donate-not-revert          | donate-not-revert-overflow | no-donate-after-deadline   | no-receive-after-deadline  | no-wd-if-no-goal           | owner-only-recv            | reclaim-not-revert         | wd-not-revert              | wd-not-revert-EOA          |
 |--------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
-| **v1** | TP!                        | ND                         | ND                         | TP!                        | TN!                        | TP!                        | ND                         | ND                         | ND                         | ND                         |
+| **v1** | TP!                        | ND                         | ND                         | TP!                        | TN                         | TP!                        | ND                         | ND                         | ND                         | ND                         |
  
 
 #### Eldarica
@@ -53,6 +52,6 @@ The contract implements the following methods:
 ### Certora
 |        | bal-decr-onlyif-wd-reclaim | donate-not-revert          | donate-not-revert-overflow | no-donate-after-deadline   | no-receive-after-deadline  | no-wd-if-no-goal           | owner-only-recv            | reclaim-not-revert         | wd-not-revert              | wd-not-revert-EOA          |
 |--------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
-| **v1** | TP!                        | TN                         | TP!                        | TP!                        | ND                         | TP!                        | TP!                        | TN                         | TN                         | FN                         |
+| **v1** | TP!                        | FN                         | TP!                        | TP!                        | ND                         | TP!                        | TP!                        | TN                         | TN                         | FN                         |
  
 
